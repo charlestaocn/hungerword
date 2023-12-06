@@ -28,6 +28,10 @@ export default class RoleBase extends cc.Component {
   public game: EatingGame;
   public visualNodePool: nodePoolEnum;
 
+  public roundComs: cc.Node[] = [];
+
+  public roundName: string = "round1";
+
   public unuse() {
     // console.log("放入节点池");
   }
@@ -35,6 +39,46 @@ export default class RoleBase extends cc.Component {
   public reuse() {
     // console.log("从节点池拿出");
   }
+
+  // public GetRoundClip(level: number): cc.AnimationClip {
+  //   let ani = this.roundAniClips[0];
+  //   switch (level) {
+  //     case 1:
+  //       ani = this.roundAniClips[0];
+  //       break;
+  //     case 2:
+  //       ani = this.roundAniClips[1];
+  //       break;
+  //     case 3:
+  //       ani = this.roundAniClips[2];
+  //       break;
+  //     case 4:
+  //       ani = this.roundAniClips[3];
+  //       break;
+  //     case 5:
+  //       ani = this.roundAniClips[4];
+  //       break;
+  //     case 6:
+  //       ani = this.roundAniClips[5];
+  //       break;
+  //     case 7:
+  //       ani = this.roundAniClips[6];
+  //       break;
+  //     case 8:
+  //       ani = this.roundAniClips[7];
+  //       break;
+  //     case 9:
+  //       ani = this.roundAniClips[0];
+  //       break;
+  //     case 10:
+  //       ani = this.roundAniClips[1];
+  //       break;
+  //   }
+
+  //   ani = this.roundAniClips[0];
+
+  //   return ani;
+  // }
 
   public GetColor(level: number): string {
     let color: string = "#FF6161";
@@ -80,13 +124,16 @@ export default class RoleBase extends cc.Component {
       this.roleLevel
     );
     this.Ai = ai;
-    let color: cc.Color = cc.Color.BLACK;
-    cc.Color.fromHEX(color, this.GetColor(this.roleLevel));
-    if (!this.Ai) {
-      this.visualNodePool = nodePoolEnum.playerVisual;
-      cc.Color.fromHEX(color, "#FF6161");
-    }
-    this.node.getChildByName("Round").color = color;
+    // let color: cc.Color = cc.Color.BLACK;
+    // cc.Color.fromHEX(color, this.GetColor(this.roleLevel));
+    // if (!this.Ai) {
+    //   this.visualNodePool = nodePoolEnum.playerVisual;
+    //   cc.Color.fromHEX(color, "#FF6161");
+    // }
+    // this.node.getChildByName("Round").color = color;
+    this.roundName = "round" + level;
+    this.node.getChildByName(this.roundName).active = true;
+    this.roundComs[level] = this.node.getChildByName(this.roundName);
     this.isDeth = false;
     this.beDeth = false;
     this.levelLabel = this.node
@@ -103,7 +150,6 @@ export default class RoleBase extends cc.Component {
       if (EatingGameConfig.ColliderTag.NEIYUAN == value.tag)
         value.radius =
           visual.height > visual.width ? visual.height / 2 : visual.width / 2;
-
     });
     // let boyCount = 4 + level;
     let boyCount = 5;
@@ -210,7 +256,7 @@ export default class RoleBase extends cc.Component {
       rotation = -rotation;
     }
     this.node.getChildByName("Visual").angle = -rotation;
-    this.node.getChildByName("Round").angle = -rotation;
+    // this.node.getChildByName(this.roundName).angle = -rotation;
   }
 
   protected UpdateEat(dt: number) {
@@ -339,18 +385,32 @@ export default class RoleBase extends cc.Component {
           10 +
           this.boyManager.roundR * (this.roleLevel - 1);
         let scale = (this.radius * 2 + 50) / 710;
-        if (this.Ai) {
-          value.radius = this.radius;
-          this.node.getChildByName("Round").scale = scale;
-          return;
-        }
+
+        // if (this.roundName != "round" + this.roleLevel) {
+        this.roundComs.forEach((node) => {
+          if ((node.active = true)) {
+            node.active = false;
+          }
+        });
+        this.roundName = "round" + this.roleLevel;
+        let node = this.node.getChildByName(this.roundName);
+        node.active = true;
+        this.roundComs[this.roleLevel] = node;
+        // }
+
+        if (this.node.getChildByName)
+          if (this.Ai) {
+            value.radius = this.radius;
+            this.node.getChildByName(this.roundName).scale = scale;
+            return;
+          }
         value.radius = EatingUtil.Lerp(
           this.node.getComponent(cc.CircleCollider).radius,
           this.radius,
           dt
         );
-        this.node.getChildByName("Round").scale = EatingUtil.Lerp(
-          this.node.getChildByName("Round").scale,
+        this.node.getChildByName(this.roundName).scale = EatingUtil.Lerp(
+          this.node.getChildByName(this.roundName).scale,
           scale,
           dt
         );
@@ -362,7 +422,6 @@ export default class RoleBase extends cc.Component {
     let a = Date.now();
     if (this.Ai) this.AiMove(dt);
     this.UpdateEat(dt);
-
     // if (dt > 0.033333)
     //     console.log("处理吃东西的时间", Date.now() - a, this.game.dangqiandt, "当前被吃的BOY长度", this.eatingBoy.length, "当前被吃的角色长度", this.eatingRole.length);
     this.UpdateRotation();

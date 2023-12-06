@@ -117,8 +117,8 @@
         0,
         0,
         0,
+        0,
         1,
-        6.123233995736766e-17,
         1,
         1,
         1
@@ -128,7 +128,7 @@
       "__type__": "cc.Vec3",
       "x": 0,
       "y": 0,
-      "z": 180
+      "z": 0
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -153,7 +153,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "57148e3f-0c9b-4c16-aa65-1ce163d52fc8"
+      "__uuid__": "b429c8c6-febc-4b5b-99a3-96ccdba1ee1a"
     },
     "_type": 0,
     "_sizeMode": 0,

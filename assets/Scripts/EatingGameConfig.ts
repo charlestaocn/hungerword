@@ -7,7 +7,7 @@ export default class EatingGameConfig {
   public static equalsPlayerRoleCount = 4;
   public static lessPlayerRoleOnt = 1;
   public static lessPlayerRoleCount = 2;
-  public static maxEnemyRole =10;
+  public static maxEnemyRole = 10;
   public static gameMaxBoy = 10;
   public static nodePoolInitCount = {
     boy: 2,

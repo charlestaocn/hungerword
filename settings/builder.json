@@ -8,7 +8,7 @@
   },
   "packageName": "org.cocos2d.helloworld",
   "startScene": "4150c9b5-6b0c-497e-923a-66f854faee0d",
-  "title": "thehungerworld",
+  "title": "lastsurvivor",
   "webOrientation": "auto",
   "includeSDKBox": false,
   "inlineSpriteFrames": true,
@@ -24,7 +24,7 @@
   "fb-instant-games": {},
   "android": {
     "REMOTE_SERVER_ROOT": "",
-    "packageName": "com.cfg.thg"
+    "packageName": "com.cfg.lastS"
   },
   "ios": {
     "REMOTE_SERVER_ROOT": "",
@@ -50,5 +50,5 @@
     "scheme": "https",
     "skipRecord": false
   },
-  "appBundle": true
+  "appBundle": false
 }

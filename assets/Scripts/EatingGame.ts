@@ -31,6 +31,8 @@ export default class EatingGame extends cc.Component {
 
   @property(cc.Node)
   private stopNode: cc.Node = null;
+  @property(cc.Node)
+  private wonNode: cc.Node = null;
 
   public boyCount = 0;
   public player: Player;
@@ -76,8 +78,13 @@ export default class EatingGame extends cc.Component {
   }
 
   showStop(event: cc.Event, flag: string) {
+    console.log("showStop!");
     this.stopFlag = flag == "true";
     this.stopNode.active = this.stopFlag;
+  }
+
+  restart(event: cc.Event, flag: string) {
+    this.GameOver();
   }
 
   public InitGame() {
@@ -181,6 +188,8 @@ export default class EatingGame extends cc.Component {
     this.lessPlayerRoleOntCount = 0;
     this.lessPlayerRole = [];
     this.destroyedTime = 0;
+    this.stopFlag = false;
+    this.wonNode.active = false;
     setTimeout(() => {
       this.InitGame();
     }, 3000);
@@ -315,7 +324,10 @@ export default class EatingGame extends cc.Component {
   }
 
   protected update(dt: number): void {
-    if (this.player && this.player.GetLevel() > 10) this.GameOver();
+    if (this.player && this.player.GetLevel() > 10) {
+      if (!this.wonNode.active) this.wonNode.active = true;
+      this.stopFlag = true;
+    }
     this.dangqiandt++;
     if (dt > 0.05)
       console.error(

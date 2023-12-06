@@ -142,7 +142,7 @@ export class ZoomRatioXY {
 
   static instance: ZoomRatioXY = null;
 
-  1 = { x: 1540, y: 960, width: 1920, height: 1080 } as ZoomRatioXY;
+  1 = { x: 2550, y: 600, width: 1920, height: 1080 } as ZoomRatioXY;
   // 0.9 = { x: 435, y: 400, width: 1920, height: 1080 } as ZoomRatioXY;
   // 0.8 = { x: 300, y: 330, width: 1920, height: 1080 } as ZoomRatioXY;
   // 0.7 = { x: 130, y: 230, width: 1920, height: 1080 } as ZoomRatioXY;
