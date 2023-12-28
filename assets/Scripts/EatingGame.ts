@@ -50,6 +50,8 @@ export default class EatingGame extends cc.Component {
 
   public stopFlag: boolean = false;
 
+  public playBg: boolean = false;
+
   @property(cc.Node)
   touchNode: cc.Node = null;
 
@@ -64,7 +66,6 @@ export default class EatingGame extends cc.Component {
 
   protected start(): void {
     this.InitGame();
-    cc.audioEngine.playEffect(this.bgM, true);
 
     // let level = 2;
     // for (let i = 0; i < 2; i++) {
@@ -88,6 +89,10 @@ export default class EatingGame extends cc.Component {
   }
 
   public InitGame() {
+    if (!this.playBg) {
+      this.playBg = true;
+      cc.audioEngine.playEffect(this.bgM, true);
+    }
     this.roleManager = new RoleManager();
     this.InitNodePool();
     let newPlayer = this.GetRole(true);
